@@ -116,7 +116,7 @@ function parsePart(data: number[], partId: number) {
     const START_POS: [number, number, PosVar][] = [
         [2357, 2360, {}], // part 1
         [3290, 3293, POS_VAR1], // part 2
-        [4222, 4225, { modPos: 7 }], // part 3
+        [4222, 4225, POS_VAR2], // part 3
         [5155, 5158, POS_VAR6], // part 4
         [6088, 6090, POS_VAR3], // part 5
         [7020, 7023, POS_VAR4], // part 6
