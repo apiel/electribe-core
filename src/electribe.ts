@@ -27,7 +27,7 @@ export function parseMessage(data: number[]) {
             return pattern;
 
         default:
-            event.onMidiData({data});
+            event.onMidiData({ data });
             break;
     }
 }
@@ -73,8 +73,7 @@ export function parsePattern(rawData: number[]) {
         // console.log(`part ${partId}`, part.ifx);
     }
 
-    // console.log(parsePart(data, 1));
-    console.log(parsePart(data, 7));
+    console.log(parsePart(data, 9));
 
     return pattern;
 }
@@ -95,29 +94,28 @@ interface PosVar {
     egInt?: number;
     resPos?: number;
     decayReleasePos?: number;
+    panPos?: number;
 }
 
 function parsePart(data: number[], partId: number) {
     // part2 many stuff wrong
     // part4
 
+    const POS_VAR1 = {
+        oscEditPos: 0,
+        filterPos: 1,
+        modPos: 6,
+        modDepthPos: 8,
+        modSpeedPos: 7,
+        ampEGpos: 17,
+        levelPos: 15,
+        ifxOnPos: 24,
+        ifxPos: 25,
+        panPos: 16,
+    };
     const START_POS: [number, number, PosVar][] = [
         [2357, 2360, {}], // part 1
-        [
-            3290,
-            3293,
-            {
-                oscEditPos: 0,
-                filterPos: 1,
-                modPos: 6,
-                modDepthPos: 8,
-                modSpeedPos: 7,
-                ampEGpos: 17,
-                levelPos: 15,
-                ifxOnPos: 24,
-                ifxPos: 25,
-            },
-        ], // part 2
+        [3290, 3293, POS_VAR1], // part 2
         [4222, 4225, { modPos: 7 }], // part 3
         [
             5155,
@@ -139,7 +137,7 @@ function parsePart(data: number[], partId: number) {
             },
         ], // part 7
         [8885, 8888, { modPos: 6 }], // part 8
-        [9818, 9821, {}], // part 9
+        [9818, 9821, POS_VAR1], // part 9
         [10750, 10753, {}], // part 10
         [11683, 11686, {}], // part 11
         [12616, 12618, {}], // part 12
@@ -179,6 +177,7 @@ function parsePart(data: number[], partId: number) {
             egInt = 5,
             resPos = 4,
             decayReleasePos = 12,
+            panPos = 17,
         },
     ] = START_POS[partId];
     // console.log('part', partId, ':', pos + modPos);
@@ -213,11 +212,11 @@ function parsePart(data: number[], partId: number) {
         ampEG: !!data[pos + ampEGpos],
         level: data[pos + levelPos],
         pan:
-            data[pos + 17] === 0
+            data[pos + panPos] === 0
                 ? 'center'
-                : data[pos + 17] > 64
-                ? `L ${data[pos + 17] * -1 + 128}`
-                : `R ${data[pos + 17]}`,
+                : data[pos + panPos] > 64
+                ? `L ${data[pos + panPos] * -1 + 128}`
+                : `R ${data[pos + panPos]}`,
         attack: data[pos + 11],
         decayRelease: data[pos + decayReleasePos],
         ifxOn: !!data[pos + ifxOnPos],
