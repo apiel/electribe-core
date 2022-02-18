@@ -73,7 +73,7 @@ export function parsePattern(rawData: number[]) {
         // console.log(`part ${partId}`, part.ifx);
     }
 
-    console.log(parsePart(data, 12));
+    console.log(parsePart(data, 13));
 
     return pattern;
 }
@@ -119,6 +119,7 @@ function parsePart(data: number[], partId: number) {
     const POS_VAR2 = { glidePos: 31, modPos: 7 };
     const POS_VAR3 = { ...POS_VAR2, pitchPos: 30, egInt: 6 };
     const POS_VAR4 = { modPos: 6, modSpeedPos: 7, levelPos: 15 };
+    const POS_VAR5 = { ...POS_VAR3, resPos: 5, decayReleasePos: 13 };
 
     const START_POS: [number, number, PosVar][] = [
         [2357, 2360, {}], // part 1
@@ -127,14 +128,14 @@ function parsePart(data: number[], partId: number) {
         [5155, 5158, POS_VAR0], // part 4
         [6088, 6090, POS_VAR3], // part 5
         [7020, 7023, POS_VAR4], // part 6
-        [7953, 7955, { ...POS_VAR3, resPos: 5, decayReleasePos: 13 }], // part 7
+        [7953, 7955, POS_VAR5], // part 7
         [8885, 8888, { modPos: 6 }], // part 8
         [9818, 9821, POS_VAR1], // part 9
         [10750, 10753, POS_VAR2], // part 10
         [11683, 11686, { ...POS_VAR0, oscEditPos: 0, modPos: 6, panPos: 16 }], // part 11
         [12616, 12618, POS_VAR3], // part 12
         [13548, 13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
-        [14481, 14483, {}], // part 14
+        [14481, 14483, POS_VAR5], // part 14
         [15413, 15416, {}], // part 15
         [16346, 16349, {}], // part 16
     ];
