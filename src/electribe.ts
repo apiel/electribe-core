@@ -73,7 +73,7 @@ export function parsePattern(rawData: number[]) {
         // console.log(`part ${partId}`, part.ifx);
     }
 
-    console.log(parsePart(data, 9));
+    console.log(parsePart(data, 10));
 
     return pattern;
 }
@@ -138,8 +138,20 @@ function parsePart(data: number[], partId: number) {
         ], // part 7
         [8885, 8888, { modPos: 6 }], // part 8
         [9818, 9821, POS_VAR1], // part 9
-        [10750, 10753, {}], // part 10
-        [11683, 11686, {}], // part 11
+        [10750, 10753, { glidePos: 31, modPos: 7 }], // part 10
+        [
+            11683,
+            11686,
+            {
+                oscEditPos: 0,
+                modPos: 6,
+                modDepthPos: 8,
+                modSpeedPos: 7,
+                ifxOnPos: 24,
+                levelPos: 15,
+                panPos: 16,
+            },
+        ], // part 11
         [12616, 12618, {}], // part 12
         [13548, 13551, {}], // part 13
         [14481, 14483, {}], // part 14
