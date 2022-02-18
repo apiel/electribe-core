@@ -73,7 +73,7 @@ export function parsePattern(rawData: number[]) {
         // console.log(`part ${partId}`, part.ifx);
     }
 
-    console.log(parsePart(data, 14));
+    console.log(parsePart(data, 15));
 
     return pattern;
 }
@@ -137,7 +137,7 @@ function parsePart(data: number[], partId: number) {
         [13548, 13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
         [14481, 14483, POS_VAR5], // part 14
         [15413, 15416, { modPos: 6 }], // part 15
-        [16346, 16349, {}], // part 16
+        [16346, 16349, POS_VAR1], // part 16
     ];
 
     const WEIRD_OSC_POS = [
