@@ -1,11 +1,25 @@
 {
-  "scripts": {
-    "dev": "node-dev main.js"
+  "name": "electribe-core",
+  "version": "0.0.1",
+  "description": "Lib to parse electribe midi messages.",
+  "main": "dist",
+  "types": "dist",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/apiel/electribe-core"
   },
-  "dependencies": {
-    "midi": "^2.0.0"
+  "author": "Alexandre Piel <alexandre.piel@gmail.com>",
+  "license": "UNLICENSED",
+  "scripts": {
+    "prepublish": "npm run build",
+    "dev": "ts-node-dev example/main.ts",
+    "clean": "rimraf dist",
+    "build": "tsc"
   },
   "devDependencies": {
-    "node-dev": "^7.1.0"
+    "midi": "^2.0.0",
+    "ts-node": "^10.5.0",
+    "ts-node-dev": "^1.1.8",
+    "typescript": "^4.5.5"
   }
 }
