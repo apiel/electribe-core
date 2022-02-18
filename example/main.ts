@@ -63,7 +63,8 @@ output.sendMessage([0xf0, 0x42, 0x30, 0, 1, 0x23, 0x10, 0xf7]);
 // output.sendMessage([0xc0, 0,10]);
 
 event.onPatternData = ({ pattern, data }) => {
-    // console.log(pattern);
+    console.log(pattern.part[3]);
+    // writeFileSync(`${__dirname}/../test/214.json`, JSON.stringify(data));
 
     const output = readFileSync(LOG_FILE);
     if (output) {
