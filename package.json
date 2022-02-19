@@ -1,6 +1,6 @@
 {
   "name": "electribe-core",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Lib to parse electribe midi messages.",
   "main": "dist",
   "types": "dist",
@@ -11,7 +11,7 @@
   "author": "Alexandre Piel <alexandre.piel@gmail.com>",
   "license": "UNLICENSED",
   "scripts": {
-    "prepublish": "npm run build",
+    "prepublishOnly": "npm run build",
     "dev": "ts-node-dev example/main.ts",
     "clean": "rimraf dist",
     "build": "tsc",
