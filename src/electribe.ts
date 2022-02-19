@@ -173,41 +173,51 @@ function parsePart(data: number[], partId: number) {
         (data[oscPos + weirdoB] && 256);
     const part = {
         name: `part ${partId + 1}`,
-        oscId: oscId + 1,
-        osc: OSC[oscId],
-        oscEdit: data[pos + oscEditPos],
-        pitch:
-            data[pos + pitchPos] > 64
-                ? data[pos + pitchPos] - 128
-                : data[pos + pitchPos],
-        glide: data[pos + glidePos],
-        filterId: data[pos + filterPos],
-        filter: FILTER[data[pos + filterPos]],
-        cutoff: data[pos + 3],
-        resonance: data[pos + resPos],
-        egInt:
-            data[pos + egInt] > 64
-                ? data[pos + egInt] - 128
-                : data[pos + egInt],
-        modulationId: data[pos + modPos] + 1,
-        modulation: MOD[data[pos + modPos]],
-        modSpeed: data[pos + modSpeedPos],
-        modDepth: data[pos + modDepthPos],
+        oscillator: {
+            id: oscId + 1,
+            name: OSC[oscId],
+            edit: data[pos + oscEditPos],
+            pitch:
+                data[pos + pitchPos] > 64
+                    ? data[pos + pitchPos] - 128
+                    : data[pos + pitchPos],
+            glide: data[pos + glidePos],
+        },
+        filter: {
+            id: data[pos + filterPos],
+            name: FILTER[data[pos + filterPos]],
+            cutoff: data[pos + 3],
+            resonance: data[pos + resPos],
+            egInt:
+                data[pos + egInt] > 64
+                    ? data[pos + egInt] - 128
+                    : data[pos + egInt],
+        },
+        modulation: {
+            id: data[pos + modPos] + 1,
+            name: MOD[data[pos + modPos]],
+            speed: data[pos + modSpeedPos],
+            depth: data[pos + modDepthPos],
+        },
         mfxSend: !!data[pos + 19],
-        ampEG: !!data[pos + ampEGpos],
-        level: data[pos + levelPos],
-        pan:
-            data[pos + panPos] === 0
-                ? 'center'
-                : data[pos + panPos] > 64
-                ? `L ${data[pos + panPos] * -1 + 128}`
-                : `R ${data[pos + panPos]}`,
-        attack: data[pos + 11],
-        decayRelease: data[pos + decayReleasePos],
-        ifxOn: !!data[pos + ifxOnPos],
-        ifxId: data[pos + ifxPos] + 1,
-        ifx: IFX[data[pos + ifxPos]],
-        ifxEdit: data[pos + ifxEditPos],
+        envelope: {
+            ampEG: !!data[pos + ampEGpos],
+            level: data[pos + levelPos],
+            pan:
+                data[pos + panPos] === 0
+                    ? 'center'
+                    : data[pos + panPos] > 64
+                    ? `L ${data[pos + panPos] * -1 + 128}`
+                    : `R ${data[pos + panPos]}`,
+            attack: data[pos + 11],
+            decayRelease: data[pos + decayReleasePos],
+        },
+        effect: {
+            id: data[pos + ifxPos] + 1,
+            name: IFX[data[pos + ifxPos]],
+            on: !!data[pos + ifxOnPos],
+            edit: data[pos + ifxEditPos],
+        }
     };
 
     return part;
