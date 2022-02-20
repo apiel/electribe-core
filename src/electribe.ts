@@ -3,7 +3,7 @@ import { OSC } from './osc';
 import { MOD } from './mod';
 
 export type Pattern = ReturnType<typeof parsePattern>;
-export type Part = Pattern['part'];
+export type Part = Pattern['part'][0];
 
 export const event = {
     onPatternData: ({

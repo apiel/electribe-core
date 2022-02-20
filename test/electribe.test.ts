@@ -1,6 +1,8 @@
 import { readFileSync } from 'fs';
 import { parseMessage } from '../src';
 
+ // to fix after refactoring!
+
 describe('electribe', () => {
     let data: number[] = [];
     beforeAll(() => {
