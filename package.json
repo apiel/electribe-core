@@ -1,6 +1,6 @@
 {
   "name": "electribe-core",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "Lib to parse electribe midi messages.",
   "main": "dist",
   "types": "dist",
