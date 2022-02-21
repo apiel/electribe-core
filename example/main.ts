@@ -66,10 +66,10 @@ event.onPatternData = ({ pattern, data }) => {
     console.log(pattern.part[3]);
     // writeFileSync(`${__dirname}/../test/214.json`, JSON.stringify(data));
 
-    const output = readFileSync(LOG_FILE);
-    if (output) {
-        const pre = JSON.parse(output.toString());
-        // console.log('output', pre);
+    const content = readFileSync(LOG_FILE);
+    if (content) {
+        const pre = JSON.parse(content.toString());
+        // console.log('content', pre);
         data.forEach((value, index) => {
             if (pre[index] !== value) {
                 console.log(`> (${index}) ${pre[index]} <=> ${value}`);
@@ -82,3 +82,5 @@ event.onPatternData = ({ pattern, data }) => {
 event.onMidiData = ({ data }) => console.log('MIDI data', data);
 
 event.onError = ({ type }) => console.error('Error', type);
+
+event.onWriteDone = () => console.log('Write done successfully.');

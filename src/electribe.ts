@@ -20,6 +20,7 @@ export const event = {
         data: number[];
         type: 'DATA_FORMAT_ERROR' | 'DATA_LOAD_ERROR' | 'WRITE_ERROR';
     }) => {},
+    onWriteDone: () => {},
 };
 
 export function parseMessage(data: number[]) {
@@ -47,9 +48,12 @@ export function parseMessage(data: number[]) {
                 event.onError({ data, type: 'DATA_LOAD_ERROR' });
                 return;
 
-            case 0x51: // 0x51 GLOBAL DATA DUMP
+            case 0x21: // 0x21 (33) WRITE COMPLETED
+                event.onWriteDone();
+                return;
+
+            case 0x51: // 0x51 (81) GLOBAL DATA DUMP
             case 0x23: // 0x23 DATA LOAD COMPLETED
-            case 0x21: // 0x21 WRITE COMPLETED
         }
     }
 

@@ -1,6 +1,6 @@
 {
   "name": "electribe-core",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "Lib to parse electribe midi messages.",
   "main": "dist",
   "types": "dist",
@@ -13,6 +13,8 @@
   "scripts": {
     "prepublishOnly": "npm run build",
     "dev": "ts-node-dev example/main.ts",
+    "write": "ts-node example/write.ts",
+    "write2": "ts-node example/write2.ts",
     "clean": "rimraf dist",
     "build": "tsc",
     "test": "jest"
