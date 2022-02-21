@@ -1,6 +1,7 @@
 import { BEAT, KEY, SCALE, MFX, FILTER, IFX } from './constant';
 import { OSC } from './osc';
 import { MOD } from './mod';
+import { ELECTRIBE2_SYSEX_HEADER } from '.';
 
 export type Pattern = ReturnType<typeof parsePattern>;
 export type Part = Pattern['part'][0];
@@ -14,23 +15,45 @@ export const event = {
         data: number[];
     }) => {},
 
-    onMidiData: ({ data }: { data: number[] }) => {},
+    onMidiData: (_: { data: number[] }) => {},
+    onError: (_: {
+        data: number[];
+        type: 'DATA_FORMAT_ERROR' | 'DATA_LOAD_ERROR' | 'WRITE_ERROR';
+    }) => {},
 };
 
 export function parseMessage(data: number[]) {
-    const headers = data.slice(0, 7).toString();
-    switch (headers) {
-        // case '240,66,48,0,1,34,64': // e2s ?
-        case '240,66,48,0,1,35,64': // e2
-            // console.log('Received pattern', data);
-            const pattern = parsePattern(data);
-            event.onPatternData({ pattern, data });
-            return { pattern };
+    const headers = data.slice(0, 6).toString();
 
-        default:
-            event.onMidiData({ data });
-            break;
+    if (headers === ELECTRIBE2_SYSEX_HEADER) {
+        // See 1-4 SYSTEM EXCLUSIVE MESSAGES
+        switch (data[6]) {
+            case 0x40: // 0x40 (64) CURRENT PATTERN DATA DUMP
+            case 0x4c: // 0x4C (76) PATTERN DATA DUMP (1 PATTERN)
+                // console.log('Received pattern', data);
+                const pattern = parsePattern(data);
+                event.onPatternData({ pattern, data });
+                return { pattern };
+
+            case 0x26: // 0x26 DATA FORMAT ERROR
+                event.onError({ data, type: 'DATA_FORMAT_ERROR' });
+                return;
+
+            case 0x22: // 0x22 WRITE ERROR
+                event.onError({ data, type: 'WRITE_ERROR' });
+                return;
+
+            case 0x24: // 0x24 DATA LOAD ERROR
+                event.onError({ data, type: 'DATA_LOAD_ERROR' });
+                return;
+
+            case 0x51: // 0x51 GLOBAL DATA DUMP
+            case 0x23: // 0x23 DATA LOAD COMPLETED
+            case 0x21: // 0x21 WRITE COMPLETED
+        }
     }
+
+    event.onMidiData({ data });
 }
 
 export function parsePattern(rawData: number[]) {
@@ -218,7 +241,7 @@ function parsePart(data: number[], partId: number) {
             name: IFX[data[pos + ifxPos]],
             on: !!data[pos + ifxOnPos],
             edit: data[pos + ifxEditPos],
-        }
+        },
     };
 
     return part;

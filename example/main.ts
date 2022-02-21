@@ -80,3 +80,5 @@ event.onPatternData = ({ pattern, data }) => {
 };
 
 event.onMidiData = ({ data }) => console.log('MIDI data', data);
+
+event.onError = ({ type }) => console.error('Error', type);
