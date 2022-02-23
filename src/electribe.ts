@@ -60,14 +60,24 @@ export function parseMessage(data: number[]) {
     event.onMidiData({ data });
 }
 
+export function setName(rawData: number[], name: string) {
+    const data = [...rawData];
+    for (let i = 0; i < 15; i++) {
+        const p = 26 + i + (i > 4 ? 1 : 0) + (i > 11 ? 1 : 0);
+        data[p] = name.charCodeAt(i) || 32; // 32 = space
+    }
+    return data;
+}
+
 export function parsePattern(rawData: number[]) {
     const data = [...rawData];
 
     const name = data
         .slice(26, 43)
-        .filter((c, k) => c && k != 13) // data[39], here 13, is used for tempo ? kind of weird...
+        .filter((c, k) => c && k != 13 && k != 5) // data[39], here 13, is used for tempo ? kind of weird...
         .map((c) => String.fromCharCode(c))
-        .join('');
+        .join('')
+        .trim();
 
     const pattern = {
         name,

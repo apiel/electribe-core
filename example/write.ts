@@ -1,3 +1,6 @@
+// try jazz-midi
+// or https://github.com/cwilso/WebMIDIAPIShim
+
 // import midi from 'midi';
 const midi = require('midi');
 import { readFileSync } from 'fs';

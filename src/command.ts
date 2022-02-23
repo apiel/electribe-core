@@ -1,0 +1,1 @@
+export const GET_CURRENT_PATTERN = [240, 66, 48, 0, 1, 35, 16, 247]; // F0,42,30,00,01,23,10,F7

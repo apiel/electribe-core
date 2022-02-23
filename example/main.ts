@@ -2,7 +2,7 @@
 const midi = require('midi');
 import { writeFileSync, readFileSync } from 'fs';
 
-import { parseMessage, event } from '../src/index';
+import { parseMessage, event, setName, parsePattern } from '../src/index';
 
 const LOG_FILE = `${__dirname}/log.json`;
 
@@ -63,7 +63,7 @@ output.sendMessage([0xf0, 0x42, 0x30, 0, 1, 0x23, 0x10, 0xf7]);
 // output.sendMessage([0xc0, 0,10]);
 
 event.onPatternData = ({ pattern, data }) => {
-    console.log(pattern.part[3]);
+    console.log(pattern.name);
     // writeFileSync(`${__dirname}/../test/214.json`, JSON.stringify(data));
 
     const content = readFileSync(LOG_FILE);
@@ -77,6 +77,9 @@ event.onPatternData = ({ pattern, data }) => {
         });
     }
     writeFileSync(LOG_FILE, JSON.stringify(data));
+
+    const p2 = parsePattern(setName(data, 'Hello world1234569abcdefg'));
+    console.log(p2.name);
 };
 
 event.onMidiData = ({ data }) => console.log('MIDI data', data);
