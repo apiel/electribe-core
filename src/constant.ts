@@ -1,5 +1,3 @@
-export const ELECTRIBE2_SYSEX_HEADER = '240,66,48,0,1,35'; // 0xf0, 0x42, 0x30, 0, 1, 0x23
-
 export const BEAT = ['16', '32', '8 Tri', '16 Tri'];
 export const MFX = [
     'Mod Delay',

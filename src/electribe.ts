@@ -1,7 +1,7 @@
 import { BEAT, KEY, SCALE, MFX, FILTER, IFX } from './constant';
 import { OSC } from './osc';
 import { MOD } from './mod';
-import { ELECTRIBE2_SYSEX_HEADER } from '.';
+import { E2_SYSEX_HEADER_STR } from '.';
 
 export type Pattern = ReturnType<typeof parsePattern>;
 export type Part = Pattern['part'][0];
@@ -26,7 +26,7 @@ export const event = {
 export function parseMessage(data: number[]) {
     const headers = data.slice(0, 6).toString();
 
-    if (headers === ELECTRIBE2_SYSEX_HEADER) {
+    if (headers === E2_SYSEX_HEADER_STR) {
         // See 1-4 SYSTEM EXCLUSIVE MESSAGES
         switch (data[6]) {
             case 0x40: // 0x40 (64) CURRENT PATTERN DATA DUMP
