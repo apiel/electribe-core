@@ -235,7 +235,7 @@ function parsePart(data: number[], partId: number) {
         },
         modulation: {
             id: data[pos + modPos] + 1,
-            name: MOD[data[pos + modPos]],
+            name: MOD[data[pos + modPos]] || {}, // || {} this should not happen
             speed: data[pos + modSpeedPos],
             depth: data[pos + modDepthPos],
         },
