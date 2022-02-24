@@ -1,9 +1,10 @@
 export const E2_SYSEX_HEADER = [240, 66, 48, 0, 1, 35]; // 0xf0, 0x42, 0x30, 0, 1, 0x23
 export const E2_SYSEX_HEADER_STR = E2_SYSEX_HEADER.toString();
 
-export const SYSEX_CURRENT_PATTERN = [...E2_SYSEX_HEADER, 16, 247]; // F0,42,30,00,01,23,10,F7
+export const SYSEX_GET_CURRENT_PATTERN = [...E2_SYSEX_HEADER, 16, 247]; // F0,42,30,00,01,23,10,F7
+export const SYSEX_SEND_CURRENT_PATTERN = [...E2_SYSEX_HEADER, 0x40, 247];
 
-export const SYSEX_PATTERN = (pos: number) => [
+export const SYSEX_GET_PATTERN = (pos: number) => [
     ...E2_SYSEX_HEADER,
     0x4c,
     (pos - 1) % 128,
@@ -34,3 +35,17 @@ export const E2_BIN_HEADER = [
     255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255,
     255, 255, 255, 255, 255, 255, 255,
 ];
+
+export function generateHexE2BinHeader() {
+    const ljust = (arr: number[], len: number, val: number) => [
+        ...arr,
+        ...Array(len - arr.length).fill(val),
+    ];
+    const b = (str: string) => [...str].map((c) => c.charCodeAt(0));
+
+    return [
+        ...ljust(b('KORG'), 16, 0x00),
+        ...ljust(b('electribe'), 16, 0x00),
+        ...ljust([0x01, 0x00, 0x00, 0x00], 224, 0xff),
+    ];
+}

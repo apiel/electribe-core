@@ -1,7 +1,7 @@
 import { BEAT, KEY, SCALE, MFX, FILTER, IFX } from './constant';
 import { OSC } from './osc';
 import { MOD } from './mod';
-import { E2_SYSEX_HEADER_STR } from '.';
+import { E2_SYSEX_HEADER, E2_SYSEX_HEADER_STR } from '.';
 
 export type Pattern = ReturnType<typeof parsePattern>;
 export type Part = Pattern['part'][0];
@@ -24,13 +24,15 @@ export const event = {
 };
 
 export function parseMessage(data: number[]) {
-    const headers = data.slice(0, 6).toString();
+    const headerEnd = E2_SYSEX_HEADER.length;
+    const headers = data.slice(0, headerEnd).toString();
 
     if (headers === E2_SYSEX_HEADER_STR) {
         // See 1-4 SYSTEM EXCLUSIVE MESSAGES
-        switch (data[6]) {
+        switch (data[headerEnd]) {
+            // should move those to hex...
             case 0x40: // 0x40 (64) CURRENT PATTERN DATA DUMP
-            case 0x4c: // 0x4C (76) PATTERN DATA DUMP (1 PATTERN)
+            case 0x4c: // 0x4C (76) GIVEN PATTERN DATA DUMP
                 // console.log('Received pattern', data);
                 const pattern = parsePattern(data);
                 event.onPatternData({ pattern, data });
