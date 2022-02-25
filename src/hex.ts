@@ -2,7 +2,8 @@ export const E2_SYSEX_HEADER = [240, 66, 48, 0, 1, 35]; // 0xf0, 0x42, 0x30, 0, 
 export const E2_SYSEX_HEADER_STR = E2_SYSEX_HEADER.toString();
 
 export const SYSEX_GET_CURRENT_PATTERN = [...E2_SYSEX_HEADER, 16, 247]; // F0,42,30,00,01,23,10,F7
-export const SYSEX_SEND_CURRENT_PATTERN = [...E2_SYSEX_HEADER, 0x40, 0];
+export const SYSEX_SEND_CURRENT_PATTERN = [...E2_SYSEX_HEADER, 0x40];
+export const SYSEX_SEND_CURRENT_PATTERN2 = [...E2_SYSEX_HEADER, 0x40, 0];
 
 export const SYSEX_GET_PATTERN = (pos: number) => [
     ...E2_SYSEX_HEADER,
