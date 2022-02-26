@@ -45,7 +45,13 @@ export function parsePart(data: number[], partId: number) {
         panPos: 16,
     };
     const POS_VAR2 = { glidePos: 31, modPos: 7 };
-    const POS_VAR3 = { ...POS_VAR2, pitchPos: 30, egInt: 6 };
+    const POS_VAR3 = {
+        ...POS_VAR2,
+        pitchPos: 30,
+        egInt: 6,
+        voiceAssignPos: -9,
+        oscPos: -2,
+    };
     const POS_VAR4 = { modSpeedPos: 7, levelPos: 15 };
     const POS_VAR5 = {
         ...POS_VAR3,
@@ -60,16 +66,16 @@ export function parsePart(data: number[], partId: number) {
         [3293, POS_VAR1], // part 2
         [4225, { ...POS_VAR2, voiceAssignPos: -9 }], // part 3
         [5158, POS_VAR6], // part 4
-        [6090, { ...POS_VAR3, voiceAssignPos: -9, oscPos: -2 }], // part 5
+        [6090, POS_VAR3], // part 5
         [7023, POS_VAR4], // part 6
-        [7955, { ...POS_VAR5, voiceAssignPos: -9, oscPos: -2 }], // part 7
+        [7955, POS_VAR5], // part 7
         [8888, {}], // part 8
         [9821, POS_VAR1], // part 9
         [10753, { ...POS_VAR2, voiceAssignPos: -9 }], // part 10
         [11686, POS_VAR6], // part 11
-        [12618, { ...POS_VAR3, voiceAssignPos: -9, oscPos: -2 }], // part 12
+        [12618, POS_VAR3], // part 12
         [13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
-        [14483, { ...POS_VAR5, voiceAssignPos: -9, oscPos: -2 }], // part 14
+        [14483, POS_VAR5], // part 14
         [15416, {}], // part 15
         [16349, POS_VAR1], // part 16
     ];
