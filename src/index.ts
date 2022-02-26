@@ -4,3 +4,4 @@ export * from './osc';
 export * from './electribe';
 export * from './hex';
 export * from './codec';
+export * from './pattern';
