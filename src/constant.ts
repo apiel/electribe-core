@@ -135,3 +135,10 @@ export const IFX = [
     'Repeater',
     'Slicer',
 ];
+
+export const VOICE = [
+    'Mono 1',
+    'Mono 2',
+    'Poly 1',
+    'Poly 2',
+]

@@ -1,6 +1,7 @@
 import { FILTER, IFX } from './constant';
 import { OSC } from './osc';
 import { MOD } from './mod';
+import { VOICE } from '.';
 
 interface PosVar {
     oscEditPos?: number;
@@ -19,6 +20,8 @@ interface PosVar {
     resPos?: number;
     decayReleasePos?: number;
     panPos?: number;
+    lastStepPos?: number;
+    voiceAssignPos?: number;
 }
 
 export function parsePart(data: number[], partId: number) {
@@ -48,16 +51,16 @@ export function parsePart(data: number[], partId: number) {
     const START_POS: [number, number, PosVar][] = [
         [2357, 2360, {}], // part 1
         [3290, 3293, POS_VAR1], // part 2
-        [4222, 4225, POS_VAR2], // part 3
+        [4222, 4225, { ...POS_VAR2, voiceAssignPos: -6 }], // part 3
         [5155, 5158, POS_VAR6], // part 4
-        [6088, 6090, POS_VAR3], // part 5
+        [6088, 6090, { ...POS_VAR3, lastStepPos: -10 }], // part 5
         [7020, 7023, POS_VAR4], // part 6
         [7953, 7955, POS_VAR5], // part 7
         [8885, 8888, {}], // part 8
         [9818, 9821, POS_VAR1], // part 9
-        [10750, 10753, POS_VAR2], // part 10
+        [10750, 10753, { ...POS_VAR2, voiceAssignPos: -6 }], // part 10
         [11683, 11686, POS_VAR6], // part 11
-        [12616, 12618, POS_VAR3], // part 12
+        [12616, 12618, { ...POS_VAR3, lastStepPos: -10 }], // part 12
         [13548, 13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
         [14481, 14483, POS_VAR5], // part 14
         [15413, 15416, {}], // part 15
@@ -95,6 +98,8 @@ export function parsePart(data: number[], partId: number) {
             resPos = 4,
             decayReleasePos = 12,
             panPos = 17,
+            lastStepPos = -9,
+            voiceAssignPos = -7,
         },
     ] = START_POS[partId];
     // console.log('part', partId, ':', pos + modPos);
@@ -105,6 +110,11 @@ export function parsePart(data: number[], partId: number) {
         (data[oscPos + weirdoB] && 256);
     const part = {
         name: `part ${partId + 1}`,
+        setting: {
+            mfxSend: !!data[pos + 19],
+            lastStep: data[pos + lastStepPos] || 16,
+            voiceAssign: VOICE[data[pos + voiceAssignPos]],
+        },
         oscillator: {
             id: oscId + 1,
             name: OSC[oscId],
@@ -127,11 +137,10 @@ export function parsePart(data: number[], partId: number) {
         },
         modulation: {
             id: data[pos + modPos] + 1,
-            name: MOD[data[pos + modPos]] || {}, // || {} this should not happen
+            name: MOD[data[pos + modPos]],
             speed: data[pos + modSpeedPos],
             depth: data[pos + modDepthPos],
         },
-        mfxSend: !!data[pos + 19],
         envelope: {
             ampEG: !!data[pos + ampEGpos],
             level: data[pos + levelPos],
