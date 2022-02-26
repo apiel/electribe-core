@@ -22,6 +22,7 @@ interface PosVar {
     panPos?: number;
     lastStepPos?: number;
     voiceAssignPos?: number;
+    partPriorityPos?: number;
 }
 
 export function parsePart(data: number[], partId: number) {
@@ -43,7 +44,7 @@ export function parsePart(data: number[], partId: number) {
         panPos: 16,
     };
     const POS_VAR2 = { glidePos: 31, modPos: 7 };
-    const POS_VAR3 = { ...POS_VAR2, pitchPos: 30, egInt: 6 };
+    const POS_VAR3 = { ...POS_VAR2, pitchPos: 30, egInt: 6, partPriorityPos: -3 };
     const POS_VAR4 = { modSpeedPos: 7, levelPos: 15 };
     const POS_VAR5 = { ...POS_VAR3, resPos: 5, decayReleasePos: 13 };
     const POS_VAR6 = { ...POS_VAR0, oscEditPos: 0, panPos: 16 };
@@ -100,6 +101,7 @@ export function parsePart(data: number[], partId: number) {
             panPos = 17,
             lastStepPos = -9,
             voiceAssignPos = -7,
+            partPriorityPos = -2,
         },
     ] = START_POS[partId];
     // console.log('part', partId, ':', pos + modPos);
@@ -114,6 +116,7 @@ export function parsePart(data: number[], partId: number) {
             mfxSend: !!data[pos + 19],
             lastStep: data[pos + lastStepPos] || 16,
             voiceAssign: VOICE[data[pos + voiceAssignPos]],
+            partPriority: data[pos + partPriorityPos] ? 'High' : 'Normal',
         },
         oscillator: {
             id: oscId + 1,
