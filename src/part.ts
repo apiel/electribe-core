@@ -24,6 +24,9 @@ interface PosVar {
     lastStepPos?: number;
     voiceAssignPos?: number;
     partPriorityPos?: number;
+    cutoffPos?: number;
+    attackPos?: number;
+    mfxSendPos?: number;
 }
 
 export function parsePart(data: number[], partId: number) {
@@ -31,53 +34,53 @@ export function parsePart(data: number[], partId: number) {
     // part4
 
     const POS_VAR0 = {
-        modDepthPos: 8,
-        modSpeedPos: 7,
-        levelPos: 15,
-        ifxOnPos: 24,
+        modDepthPos: 18,
+        modSpeedPos: 17,
+        levelPos: 25,
+        ifxOnPos: 34,
     };
     const POS_VAR1 = {
         ...POS_VAR0,
-        oscEditPos: 0,
-        filterPos: 1,
-        ampEGpos: 17,
-        ifxPos: 25,
-        panPos: 16,
+        oscEditPos: 10,
+        filterPos: 11,
+        ampEGpos: 27,
+        ifxPos: 35,
+        panPos: 26,
     };
-    const POS_VAR2 = { glidePos: 31, modPos: 7 };
+    const POS_VAR2 = { glidePos: 41, modPos: 17 };
     const POS_VAR3 = {
         ...POS_VAR2,
-        pitchPos: 30,
-        egInt: 6,
-        voiceAssignPos: -9,
-        oscPos: -2,
+        pitchPos: 40,
+        egInt: 16,
+        voiceAssignPos: 1,
+        oscPos: 8,
     };
-    const POS_VAR4 = { modSpeedPos: 7, levelPos: 15 };
+    const POS_VAR4 = { modSpeedPos: 17, levelPos: 25 };
     const POS_VAR5 = {
         ...POS_VAR3,
-        resPos: 5,
-        decayReleasePos: 13,
-        lastStepPos: -11,
+        resPos: 15,
+        decayReleasePos: 23,
+        lastStepPos: -1,
     };
-    const POS_VAR6 = { ...POS_VAR0, oscEditPos: 0, panPos: 16 };
+    const POS_VAR6 = { ...POS_VAR0, oscEditPos: 10, panPos: 26 };
 
     const START_POS: [number, PosVar][] = [
-        [2360, {}], // part 1
-        [3293, POS_VAR1], // part 2
-        [4225, { ...POS_VAR2, voiceAssignPos: -9 }], // part 3
-        [5158, POS_VAR6], // part 4
-        [6090, POS_VAR3], // part 5
-        [7023, POS_VAR4], // part 6
-        [7955, POS_VAR5], // part 7
-        [8888, {}], // part 8
-        [9821, POS_VAR1], // part 9
-        [10753, { ...POS_VAR2, voiceAssignPos: -9 }], // part 10
-        [11686, POS_VAR6], // part 11
-        [12618, POS_VAR3], // part 12
-        [13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
-        [14483, POS_VAR5], // part 14
-        [15416, {}], // part 15
-        [16349, POS_VAR1], // part 16
+        [2350, {}], // part 1
+        [3283, POS_VAR1], // part 2
+        [4215, { ...POS_VAR2, voiceAssignPos: 1 }], // part 3
+        [5148, POS_VAR6], // part 4
+        [6080, POS_VAR3], // part 5
+        [7013, POS_VAR4], // part 6
+        [7945, POS_VAR5], // part 7
+        [8878, {}], // part 8
+        [9811, POS_VAR1], // part 9
+        [10743, { ...POS_VAR2, voiceAssignPos: 1 }], // part 10
+        [11676, POS_VAR6], // part 11
+        [12608, POS_VAR3], // part 12
+        [13541, { ...POS_VAR4, modDepthPos: 19 }], // part 13
+        [14473, POS_VAR5], // part 14
+        [15406, {}], // part 15
+        [16339, POS_VAR1], // part 16
     ];
 
     const WEIRD_OSC_POS = [
@@ -94,26 +97,29 @@ export function parsePart(data: number[], partId: number) {
     const [
         pos,
         {
-            oscPos = -3,
-            oscEditPos = 1,
-            modPos = 6,
-            modDepthPos = 9,
-            modSpeedPos = 8,
-            levelPos = 16,
-            ifxOnPos = 25,
-            ifxPos = 26,
-            ifxEditPos = 27,
-            filterPos = 2,
-            ampEGpos = 18,
-            glidePos = 30,
-            pitchPos = 29,
-            egInt = 5,
-            resPos = 4,
-            decayReleasePos = 12,
-            panPos = 17,
-            lastStepPos = -12, // -9
-            voiceAssignPos = -10, // -7
-            partPriorityPos = -5, // -2
+            oscPos = 7,
+            oscEditPos = 11,
+            modPos = 16,
+            modDepthPos = 19,
+            modSpeedPos = 18,
+            levelPos = 26,
+            ifxOnPos = 35,
+            ifxPos = 36,
+            ifxEditPos = 37,
+            filterPos = 12,
+            ampEGpos = 28,
+            glidePos = 40,
+            pitchPos = 39,
+            egInt = 15,
+            resPos = 14,
+            decayReleasePos = 22,
+            panPos = 27,
+            lastStepPos = -2,
+            voiceAssignPos = 0,
+            partPriorityPos = 5,
+            cutoffPos = 13,
+            attackPos = 21,
+            mfxSendPos = 29,
         },
     ] = START_POS[partId];
     // console.log('part', partId, ':', pos + modPos);
@@ -125,7 +131,7 @@ export function parsePart(data: number[], partId: number) {
     const part = {
         name: `part ${partId + 1}`,
         settings: {
-            mfxSend: !!data[pos + 19],
+            mfxSend: !!data[pos + mfxSendPos],
             lastStep: data[pos + lastStepPos] || 16,
             voiceAssign: VOICE[data[pos + voiceAssignPos]],
             partPriority: data[pos + partPriorityPos] ? 'High' : 'Normal',
@@ -143,7 +149,7 @@ export function parsePart(data: number[], partId: number) {
         filter: {
             id: data[pos + filterPos],
             name: FILTER[data[pos + filterPos]],
-            cutoff: data[pos + 3],
+            cutoff: data[pos + cutoffPos],
             resonance: data[pos + resPos],
             egInt:
                 data[pos + egInt] > 64
@@ -165,7 +171,7 @@ export function parsePart(data: number[], partId: number) {
                     : data[pos + panPos] > 64
                     ? `L ${data[pos + panPos] * -1 + 128}`
                     : `R ${data[pos + panPos]}`,
-            attack: data[pos + 11],
+            attack: data[pos + attackPos],
             decayRelease: data[pos + decayReleasePos],
         },
         effect: {
