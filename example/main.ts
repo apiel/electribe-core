@@ -80,6 +80,7 @@ event.onPatternData = ({ pattern, data }) => {
 
     const p2 = parsePattern(setName(data, 'Hello world1234569abcdefg'));
     console.log(p2.name);
+    p2.parts.map(({ settings }, i) => console.log(`part ${i+1}: ${settings.lastStep}`));
 };
 
 event.onMidiData = ({ data }) => console.log('MIDI data', data);

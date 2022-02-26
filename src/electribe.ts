@@ -2,7 +2,7 @@ import { E2_SYSEX_HEADER, E2_SYSEX_HEADER_STR } from './hex';
 import { parsePattern } from './pattern';
 
 export type Pattern = ReturnType<typeof parsePattern>;
-export type Part = Pattern['part'][0];
+export type Part = Pattern['parts'][0];
 
 export const event = {
     onPatternData: ({

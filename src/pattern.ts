@@ -45,7 +45,7 @@ export function parsePattern(rawData: number[]) {
         // last step is per part?
         // groove is per s
         // ...
-        part: [...Array(16)].map((_, partId) => parsePart(data, partId)),
+        parts: [...Array(16)].map((_, partId) => parsePart(data, partId)),
     };
 
     return pattern;
