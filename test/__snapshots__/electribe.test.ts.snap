@@ -17,7 +17,7 @@ Object {
   "mfxHold": false,
   "mfxId": 7,
   "name": "300Miles 2",
-  "part": Array [
+  "parts": Array [
     Object {
       "effect": Object {
         "edit": 53,
@@ -65,11 +65,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
+      "settings": Object {
         "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -119,11 +119,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -173,11 +173,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
         "partPriority": "Normal",
-        "voiceAssign": "Mono 1",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -227,11 +227,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -281,11 +281,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
+      "settings": Object {
         "lastStep": 16,
         "mfxSend": true,
         "partPriority": "Normal",
-        "voiceAssign": "Mono 1",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -335,11 +335,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -389,11 +389,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
         "partPriority": "Normal",
-        "voiceAssign": "Mono 1",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -443,11 +443,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
+      "settings": Object {
         "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -497,11 +497,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -551,11 +551,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
         "partPriority": "Normal",
-        "voiceAssign": "Mono 1",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -605,11 +605,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -659,11 +659,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
+      "settings": Object {
         "lastStep": 16,
         "mfxSend": true,
         "partPriority": "Normal",
-        "voiceAssign": "Mono 1",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -713,11 +713,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -767,11 +767,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
         "partPriority": "Normal",
-        "voiceAssign": "Mono 1",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -821,11 +821,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
+      "settings": Object {
         "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
     Object {
@@ -875,11 +875,11 @@ Object {
         },
         "pitch": 63,
       },
-      "setting": Object {
-        "lastStep": 1,
+      "settings": Object {
+        "lastStep": 16,
         "mfxSend": true,
-        "partPriority": "High",
-        "voiceAssign": "Mono 1",
+        "partPriority": "Normal",
+        "voiceAssign": "Mono 2",
       },
     },
   ],

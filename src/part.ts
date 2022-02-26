@@ -4,6 +4,7 @@ import { MOD } from './mod';
 import { VOICE } from '.';
 
 interface PosVar {
+    oscPos?: number;
     oscEditPos?: number;
     modPos?: number;
     modDepthPos?: number;
@@ -54,23 +55,23 @@ export function parsePart(data: number[], partId: number) {
     };
     const POS_VAR6 = { ...POS_VAR0, oscEditPos: 0, panPos: 16 };
 
-    const START_POS: [number, number, PosVar][] = [
-        [2357, 2360, {}], // part 1
-        [3290, 3293, POS_VAR1], // part 2
-        [4222, 4225, { ...POS_VAR2, voiceAssignPos: -9 }], // part 3
-        [5155, 5158, POS_VAR6], // part 4
-        [6088, 6090, { ...POS_VAR3, voiceAssignPos: -9 }], // part 5
-        [7020, 7023, POS_VAR4], // part 6
-        [7953, 7955, { ...POS_VAR5, voiceAssignPos: -9 }], // part 7
-        [8885, 8888, {}], // part 8
-        [9818, 9821, POS_VAR1], // part 9
-        [10750, 10753, { ...POS_VAR2, voiceAssignPos: -9 }], // part 10
-        [11683, 11686, POS_VAR6], // part 11
-        [12616, 12618, { ...POS_VAR3, voiceAssignPos: -9 }], // part 12
-        [13548, 13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
-        [14481, 14483, { ...POS_VAR5, voiceAssignPos: -9 }], // part 14
-        [15413, 15416, {}], // part 15
-        [16346, 16349, POS_VAR1], // part 16
+    const START_POS: [number, PosVar][] = [
+        [2360, {}], // part 1
+        [3293, POS_VAR1], // part 2
+        [4225, { ...POS_VAR2, voiceAssignPos: -9 }], // part 3
+        [5158, POS_VAR6], // part 4
+        [6090, { ...POS_VAR3, voiceAssignPos: -9, oscPos: -2 }], // part 5
+        [7023, POS_VAR4], // part 6
+        [7955, { ...POS_VAR5, voiceAssignPos: -9, oscPos: -2 }], // part 7
+        [8888, {}], // part 8
+        [9821, POS_VAR1], // part 9
+        [10753, { ...POS_VAR2, voiceAssignPos: -9 }], // part 10
+        [11686, POS_VAR6], // part 11
+        [12618, { ...POS_VAR3, voiceAssignPos: -9, oscPos: -2 }], // part 12
+        [13551, { ...POS_VAR4, modDepthPos: 9 }], // part 13
+        [14483, { ...POS_VAR5, voiceAssignPos: -9, oscPos: -2 }], // part 14
+        [15416, {}], // part 15
+        [16349, POS_VAR1], // part 16
     ];
 
     const WEIRD_OSC_POS = [
@@ -85,9 +86,9 @@ export function parsePart(data: number[], partId: number) {
     const [, weirdoA, weirdoB] = WEIRD_OSC_POS[partId % 7];
 
     const [
-        oscPos,
         pos,
         {
+            oscPos = -3,
             oscEditPos = 1,
             modPos = 6,
             modDepthPos = 9,
@@ -112,9 +113,9 @@ export function parsePart(data: number[], partId: number) {
     // console.log('part', partId, ':', pos + modPos);
 
     const oscId =
-        data[oscPos] +
-        (data[oscPos + weirdoA] && 128) +
-        (data[oscPos + weirdoB] && 256);
+        data[pos + oscPos] +
+        (data[pos + oscPos + weirdoA] && 128) +
+        (data[pos + oscPos + weirdoB] && 256);
     const part = {
         name: `part ${partId + 1}`,
         settings: {
