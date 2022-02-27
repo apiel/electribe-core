@@ -31,7 +31,7 @@ export function sys2pat(data: number[]) {
     return [...E2_BIN_HEADER, ...converted];
 }
 
-function sys2patConvert(data: number[]) {
+export function sys2patConvert(data: number[]) {
     const chunks = chunk(data, 8);
     return chunks.flatMap(([first, ...values]) =>
         (<number[]>values).map((a, i) => a | (((first & (1 << i)) >> i) << 7)),
@@ -44,7 +44,7 @@ export function pat2sys(data: number[]) {
     return [...SYSEX_SEND_CURRENT_PATTERN, ...converted, 0xf7];
 }
 
-function pat2sysConvert(data: number[]) {
+export function pat2sysConvert(data: number[]) {
     const chunks = chunk(data, 7);
     return chunks.flatMap((values) => {
         let first = 0;

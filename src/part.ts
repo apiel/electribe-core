@@ -29,6 +29,31 @@ interface PosVar {
     mfxSendPos?: number;
 }
 
+export const START_POS: number[] = [
+    2347, // part 1
+    3280, // part 2
+    4212, // part 3
+    5145, // part 4
+    6077, // part 5
+    7010, // part 6
+    7942, // part 7
+    8875, // part 8
+    9808, // part 9
+    10740, // part 10
+    11673, // part 11
+    12605, // part 12
+    13538, // part 13
+    14470, // part 14
+    15403, // part 15
+    16336, // part 16
+];
+
+export function parsePartFromPattern(data: number[], partId: number) {
+    const pos = START_POS[partId];
+    const partData = data.slice(pos);
+    return parsePart(partData, partId);
+}
+
 export function parsePart(data: number[], partId: number) {
     const POS_VAR0 = {
         modDepthPos: 21,
@@ -49,7 +74,7 @@ export function parsePart(data: number[], partId: number) {
         ...POS_VAR2,
         pitchPos: 43,
         egInt: 19,
-        oscPos:11,
+        oscPos: 11,
     };
     const POS_VAR4 = { modSpeedPos: 20, levelPos: 28 };
     const POS_VAR5 = {
@@ -60,23 +85,23 @@ export function parsePart(data: number[], partId: number) {
     };
     const POS_VAR6 = { ...POS_VAR0, oscEditPos: 13, panPos: 29 };
 
-    const START_POS: [number, PosVar][] = [
-        [2347, {}], // part 1
-        [3280, POS_VAR1], // part 2
-        [4212, POS_VAR2], // part 3
-        [5145, POS_VAR6], // part 4
-        [6077, POS_VAR3], // part 5
-        [7010, POS_VAR4], // part 6
-        [7942, POS_VAR5], // part 7
-        [8875, {}], // part 8
-        [9808, POS_VAR1], // part 9
-        [10740, POS_VAR2], // part 10
-        [11673, POS_VAR6], // part 11
-        [12605, POS_VAR3], // part 12
-        [13538, { ...POS_VAR4, modDepthPos: 22 }], // part 13
-        [14470, POS_VAR5], // part 14
-        [15403, {}], // part 15
-        [16336, POS_VAR1], // part 16
+    const POS_VAR: PosVar[] = [
+        {}, // part 1
+        POS_VAR1, // part 2
+        POS_VAR2, // part 3
+        POS_VAR6, // part 4
+        POS_VAR3, // part 5
+        POS_VAR4, // part 6
+        POS_VAR5, // part 7
+        {}, // part 8
+        POS_VAR1, // part 9
+        POS_VAR2, // part 10
+        POS_VAR6, // part 11
+        POS_VAR3, // part 12
+        { ...POS_VAR4, modDepthPos: 22 }, // part 13
+        POS_VAR5, // part 14
+        {}, // part 15
+        POS_VAR1, // part 16
     ];
 
     const WEIRD_OSC_POS = [
@@ -90,90 +115,81 @@ export function parsePart(data: number[], partId: number) {
     ];
     const [, weirdoA, weirdoB] = WEIRD_OSC_POS[partId % 7];
 
-    const [
-        pos,
-        {
-            oscPos = 10,
-            oscEditPos = 14,
-            modPos = 19,
-            modDepthPos = 22,
-            modSpeedPos = 21,
-            levelPos = 29,
-            ifxOnPos = 38,
-            ifxPos = 39,
-            ifxEditPos = 40,
-            filterPos = 15,
-            ampEGpos = 31,
-            glidePos = 43,
-            pitchPos = 42,
-            egInt = 18,
-            resPos = 17,
-            decayReleasePos = 25,
-            panPos = 30,
-            lastStepPos = 1,
-            voiceAssignPos = 3,
-            partPriorityPos = 8,
-            cutoffPos = 16,
-            attackPos = 24,
-            mfxSendPos = 32,
-        },
-    ] = START_POS[partId];
+    const {
+        oscPos = 10,
+        oscEditPos = 14,
+        modPos = 19,
+        modDepthPos = 22,
+        modSpeedPos = 21,
+        levelPos = 29,
+        ifxOnPos = 38,
+        ifxPos = 39,
+        ifxEditPos = 40,
+        filterPos = 15,
+        ampEGpos = 31,
+        glidePos = 43,
+        pitchPos = 42,
+        egInt = 18,
+        resPos = 17,
+        decayReleasePos = 25,
+        panPos = 30,
+        lastStepPos = 1,
+        voiceAssignPos = 3,
+        partPriorityPos = 8,
+        cutoffPos = 16,
+        attackPos = 24,
+        mfxSendPos = 32,
+    } = POS_VAR[partId];
 
     const oscId =
-        data[pos + oscPos] +
-        (data[pos + oscPos + weirdoA] && 128) +
-        (data[pos + oscPos + weirdoB] && 256);
+        data[oscPos] +
+        (data[oscPos + weirdoA] && 128) +
+        (data[oscPos + weirdoB] && 256);
     const part = {
         name: `part ${partId + 1}`,
         settings: {
-            mfxSend: !!data[pos + mfxSendPos],
-            lastStep: data[pos + lastStepPos] || 16,
-            voiceAssign: VOICE[data[pos + voiceAssignPos]],
-            partPriority: data[pos + partPriorityPos] ? 'High' : 'Normal',
+            mfxSend: !!data[mfxSendPos],
+            lastStep: data[lastStepPos] || 16,
+            voiceAssign: VOICE[data[voiceAssignPos]],
+            partPriority: data[partPriorityPos] ? 'High' : 'Normal',
         },
         oscillator: {
             id: oscId + 1,
             name: OSC[oscId],
-            edit: data[pos + oscEditPos],
-            pitch:
-                data[pos + pitchPos] > 64
-                    ? data[pos + pitchPos] - 128
-                    : data[pos + pitchPos],
-            glide: data[pos + glidePos],
+            edit: data[oscEditPos],
+            pitch: data[pitchPos] > 64 ? data[pitchPos] - 128 : data[pitchPos],
+            glide: data[glidePos],
         },
         filter: {
-            id: data[pos + filterPos],
-            name: FILTER[data[pos + filterPos]],
-            cutoff: data[pos + cutoffPos],
-            resonance: data[pos + resPos],
-            egInt:
-                data[pos + egInt] > 64
-                    ? data[pos + egInt] - 128
-                    : data[pos + egInt],
+            id: data[filterPos],
+            name: FILTER[data[filterPos]],
+            cutoff: data[cutoffPos],
+            resonance: data[resPos],
+            egInt: data[egInt] > 64 ? data[egInt] - 128 : data[egInt],
         },
         modulation: {
-            id: data[pos + modPos] + 1,
-            name: MOD[data[pos + modPos]],
-            speed: data[pos + modSpeedPos],
-            depth: data[pos + modDepthPos],
+            id: data[modPos] + 1,
+            name: MOD[data[modPos]],
+            speed: data[modSpeedPos],
+            depth: data[modDepthPos],
         },
         envelope: {
-            ampEG: !!data[pos + ampEGpos],
-            level: data[pos + levelPos],
+            ampEG: !!data[ampEGpos],
+            level: data[levelPos],
             pan:
-                data[pos + panPos] === 0
+                data[panPos] === 0
                     ? 'center'
-                    : data[pos + panPos] > 64
-                    ? `L ${data[pos + panPos] * -1 + 128}`
-                    : `R ${data[pos + panPos]}`,
-            attack: data[pos + attackPos],
-            decayRelease: data[pos + decayReleasePos],
+                    : data[panPos] > 64
+                    ? `L ${data[panPos] * -1 + 128}`
+                    : `R ${data[panPos]}`,
+            attack: data[attackPos],
+            decayRelease: data[decayReleasePos],
         },
         effect: {
-            id: data[pos + ifxPos] + 1,
-            name: IFX[data[pos + ifxPos]],
-            on: !!data[pos + ifxOnPos],
-            edit: data[pos + ifxEditPos],
+            id: data[ifxPos] + 1,
+            name: IFX[data[ifxPos]],
+            on: !!data[ifxOnPos],
+            edit: data[ifxEditPos],
         },
     };
 

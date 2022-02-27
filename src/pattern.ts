@@ -1,5 +1,5 @@
 import { BEAT, KEY, SCALE, MFX } from './constant';
-import { parsePart } from './part';
+import { parsePartFromPattern } from './part';
 
 export function setName(rawData: number[], name: string) {
     // here we sould replace all none possible char to empty string
@@ -45,7 +45,9 @@ export function parsePattern(rawData: number[]) {
         // last step is per part?
         // groove is per s
         // ...
-        parts: [...Array(16)].map((_, partId) => parsePart(data, partId)),
+        parts: [...Array(16)].map((_, partId) =>
+            parsePartFromPattern(data, partId),
+        ),
     };
 
     return pattern;
