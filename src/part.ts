@@ -30,9 +30,6 @@ interface PosVar {
 }
 
 export function parsePart(data: number[], partId: number) {
-    // part2 many stuff wrong
-    // part4
-
     const POS_VAR0 = {
         modDepthPos: 21,
         modSpeedPos: 20,
@@ -121,7 +118,6 @@ export function parsePart(data: number[], partId: number) {
             mfxSendPos = 32,
         },
     ] = START_POS[partId];
-    // console.log('part', partId, ':', pos + modPos);
 
     const oscId =
         data[pos + oscPos] +
